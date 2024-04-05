@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Cinema Level.unity
+    guid: 4e4a0787d4df0b4439bc6c5c786fdf7f
   m_configObjects: {}
