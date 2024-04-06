@@ -14,7 +14,7 @@ public class DifficultyManagerSO : ScriptableObject
 
     DifficultyManagerSO() 
     {
-        maxFriendNumber = 9;
+        maxFriendNumber = 8;
         minFriendGroup = 2;
         maxFriendGroup = 4;
     }

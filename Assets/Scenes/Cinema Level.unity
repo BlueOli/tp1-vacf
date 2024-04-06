@@ -9869,7 +9869,7 @@ GameObject:
   - component: {fileID: 1987837661}
   - component: {fileID: 1987837660}
   m_Layer: 5
-  m_Name: GameRulesText
+  m_Name: GameInfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9928,7 +9928,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Game Rules:
+  m_Text: 'Game Info:
 
     - Friends (Capsules) are being loud.
 
