@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnknownPerson : MonoBehaviour
 {
@@ -9,15 +10,20 @@ public class UnknownPerson : MonoBehaviour
     public float maxPatience = 100f; // Maximum patience of the unknown person
     public float patienceDecreaseRate = 1f; // Rate at which patience decreases per second when friends are loud
     public float loudnessThreshold = 10f; // Threshold for friend loudness to start affecting patience
-    public float loudnessMultiplier = 0.5f; // Multiplier for loudness affecting patience
+    public float loudnessMultiplier = 0.25f; // Multiplier for loudness affecting patience
     public Renderer rendererComponent; // Reference to the renderer component of the unknown person
     private Gradient patienceColorGradient; // Gradient for mapping patience values to colors
+    public GameObject hotIcon;
+
+    public float temperature;
+    public float temperatureMultiplier = 0.1f;
 
     public GameManager manager;
 
     public void Start()
     {
         patience = maxPatience;
+
 
         // Create a gradient for mapping patience values to colors
         patienceColorGradient = new Gradient();
@@ -59,7 +65,11 @@ public class UnknownPerson : MonoBehaviour
             GameManager.Instance.CheckPatienceThreshold(patience);
         }
     }
-    
+
+    public float loudnessEffect;
+    public float temperatureEffect;
+    public float decreaseAmount;
+
     private void Update()
     {
         if (!manager.gameEnded)
@@ -71,14 +81,30 @@ public class UnknownPerson : MonoBehaviour
                 float distance = Vector3.Distance(transform.position, friend.transform.position);
                 if (distance < loudnessThreshold)
                 {
-                    float loudnessEffect = Mathf.Clamp(friend.currentLoudness * loudnessMultiplier, 0f, maxPatience);
-                    float decreaseAmount = patienceDecreaseRate * Time.deltaTime * loudnessEffect;
+                    loudnessEffect = Mathf.Clamp(friend.currentLoudness * loudnessMultiplier, 0f, maxPatience);
+                    temperatureEffect = Mathf.Clamp(temperature * temperatureMultiplier, 0f, maxPatience);
+                    decreaseAmount = patienceDecreaseRate * Time.deltaTime * loudnessEffect * temperatureEffect;
                     ReducePatience(decreaseAmount);
                 }
             }
 
             UpdateColor();
         }        
+
+        if(temperature > 10f)
+        {
+            if (!hotIcon.activeSelf)
+            {
+                hotIcon.SetActive(true);
+            }
+        }
+        else
+        {
+            if (hotIcon.activeSelf)
+            {
+                hotIcon.SetActive(false);
+            }
+        }
     }
 
 

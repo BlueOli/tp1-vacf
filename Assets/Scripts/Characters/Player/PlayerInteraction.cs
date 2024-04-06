@@ -9,6 +9,8 @@ public class PlayerInteraction : MonoBehaviour
     public float cooldownDuration = 5f; // Duration of the cooldown period
     public float reduceLoudnessEffect = 2f;
 
+    public KeyCode interactionKey = KeyCode.Q;
+
     public GameManager manager;
 
     public GameObject interactionFeedback; // Visual feedback for interaction
@@ -54,7 +56,7 @@ public class PlayerInteraction : MonoBehaviour
             else
             {
                 // Check for player input to interact with friends
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(interactionKey))
                 {
                     InteractWithFriends();
                     cooldownTimer = cooldownDuration; // Start the cooldown timer

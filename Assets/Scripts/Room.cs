@@ -14,11 +14,28 @@ public class Room : MonoBehaviour
     public int maxCapacity;
     public int currentCapacity;
 
+    public float temperature = 10f;
+
     private void Awake()
     {
         numRows = rowObjects.Length;
         maxCapacity = numRows * numSeatsPerRow;
         CreateSeats();
+    }
+
+    public void Update()
+    {
+        foreach (Transform t in transform)
+        {
+            if(t.gameObject.transform.childCount > 0)
+            {
+                if (t.gameObject.transform.GetChild(0).CompareTag("Unknown Person"))
+                {
+                    t.gameObject.GetComponentInChildren<UnknownPerson>().temperature = temperature;
+                }
+            }
+                
+        }      
     }
 
     private void CreateSeats()
@@ -35,8 +52,7 @@ public class Room : MonoBehaviour
                 Quaternion seatRotation = rowObject.transform.rotation;
                 GameObject seatObject = new GameObject("Seat_" + i + "_" + j);
                 seatObject.transform.SetParent(transform);
-                seatObject.transform.localPosition = seatPosition;
-                seatObject.transform.localRotation = seatRotation;
+                seatObject.transform.SetLocalPositionAndRotation(seatPosition, seatRotation);
                 seats[i, j] = seatObject.AddComponent<Seat>();
                 seats[i, j].row = i;
                 seats[i, j].seatNumber = j;

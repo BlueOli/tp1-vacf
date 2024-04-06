@@ -46,7 +46,8 @@ public class FriendSpawner : MonoBehaviour
                     Seat currentSeat = room.seats[randomRow, randomStartSeat + i];
                     Vector3 spawnPosition = currentSeat.transform.position;
                     Quaternion spawnRotation = currentSeat.transform.rotation;
-                    Instantiate(friendPrefab, spawnPosition, spawnRotation);
+                    GameObject tempFriend = Instantiate(friendPrefab, spawnPosition, spawnRotation);
+                    tempFriend.transform.SetParent(currentSeat.transform);
                     room.OccupySeat(currentSeat);
                     numFriendsSpawned++; // Increment the number of friends spawned
                 }

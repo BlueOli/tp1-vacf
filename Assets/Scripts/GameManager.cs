@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public UnknownPersonSpawner unknownPersonSpawner; // Reference to the UnknownPersonSpawner script
     public GameObject playerPrefab; // Reference to the player prefab
     public Transform spawnPoint; // Spawn point for the player
+    public MovieProgress movieProgress;
+    public Room gameRoom;
 
     public float kickOutThreshold = 0; // Threshold at which the group gets kicked out
 
@@ -22,6 +24,13 @@ public class GameManager : MonoBehaviour
     public bool gameEnded = false; // Flag to track if the game has ended
 
     public DifficultyManagerSO dificultyManagerSO;
+
+    public PowerManager powerManager;
+    public ACManager acManager;
+    public FoodAndDrinksManager foodAndDrinksManager;
+
+    public float minTemperature = 10f;
+    public float maxTemperature = 15f;
 
     private void Awake()
     {
@@ -53,6 +62,8 @@ public class GameManager : MonoBehaviour
         }
 
         SpawnPlayer();
+
+        movieProgress.movieIsPaused = false;
     }
 
     private void Update()
@@ -62,6 +73,37 @@ public class GameManager : MonoBehaviour
             AllowRestart();
             AllowContinue();
         }
+        else
+        {
+            if (movieProgress.movieIsFinished)
+            {
+                Victory();
+            }
+
+            if (powerManager.powerOut)
+            {
+                if (!movieProgress.movieIsPaused)
+                {
+                    movieProgress.movieIsPaused = true;
+                }
+            }
+            else
+            {
+                if (movieProgress.movieIsPaused)
+                {
+                    movieProgress.movieIsPaused = false;
+                }
+            }
+
+            if (acManager.ACOut)
+            {
+                gameRoom.temperature = maxTemperature;
+            }
+            else
+            {
+                gameRoom.temperature = minTemperature;
+            }
+        }       
     }
 
     private void SpawnPlayer()
@@ -137,5 +179,24 @@ public class GameManager : MonoBehaviour
         dificultyManagerSO.maxFriendNumber += 3;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    #region Random Events
+
+    public void TriggerPowerShutDown()
+    {
+        powerManager.EventTrigger();
+    }
+
+    public void TriggerACShutDown()
+    {
+        acManager.EventTrigger();
+    }
+
+    public void TriggerPopcornAndSoda()
+    {
+        foodAndDrinksManager.EventTrigger();
+    }
+
+    #endregion
 }
 

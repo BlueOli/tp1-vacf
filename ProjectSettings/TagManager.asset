@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Friend
+  - Switch
+  - Indicator
+  - Unknown Person
   layers:
   - Default
   - TransparentFX

@@ -32,7 +32,8 @@ public class UnknownPersonSpawner : MonoBehaviour
                     {
                         Vector3 spawnPosition = currentSeat.transform.position;
                         Quaternion spawnRotation = currentSeat.transform.rotation;
-                        Instantiate(unknownPersonPrefab, spawnPosition, spawnRotation);
+                        GameObject tempUnknownPerson = Instantiate(unknownPersonPrefab, spawnPosition, spawnRotation);
+                        tempUnknownPerson.transform.SetParent(currentSeat.gameObject.transform);
                         room.OccupySeat(currentSeat);
                         numUnknownPersonsSpawned++; // Increment the number of unknown persons spawned
                     }

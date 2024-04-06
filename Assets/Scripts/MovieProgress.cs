@@ -3,11 +3,12 @@ using UnityEngine.UI;
 
 public class MovieProgress : MonoBehaviour
 {
-    public Image progressBar; // Reference to the UI image for movie progress bar
-    public float movieDuration = 60f; // Duration of the movie in seconds
-    public GameManager gameManager; // Reference to the GameManager script
+    public Image progressBar; 
+    public float movieDuration = 60f; 
+    public bool movieIsFinished = false;
+    public bool movieIsPaused = true;
 
-    private float elapsedTime = 0f; // Elapsed time since the start of the movie
+    public float elapsedTime = 0f;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class MovieProgress : MonoBehaviour
 
     private void Update()
     {
-        if (!gameManager.gameEnded)
+        if (!movieIsPaused || movieIsFinished)
         {
             // Increment elapsed time
             elapsedTime += Time.deltaTime;
@@ -32,8 +33,10 @@ public class MovieProgress : MonoBehaviour
             // Check for movie completion
             if (elapsedTime >= movieDuration)
             {
-                // Movie has ended, trigger win condition
-                gameManager.Victory();
+                if (!movieIsFinished)
+                {
+                    movieIsFinished = true;
+                }                
             }
         }        
     }

@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 9104329224311525868}
   - component: {fileID: 8779168319202116356}
   - component: {fileID: 5537282578252244606}
+  - component: {fileID: 5931608485402581755}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -302,8 +303,23 @@ MonoBehaviour:
   interactionRange: 2
   cooldownDuration: 2
   reduceLoudnessEffect: 2
+  interactionKey: 113
   manager: {fileID: 0}
   interactionFeedback: {fileID: 9113836359072617805}
+--- !u!114 &5931608485402581755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6485502819027516476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af7da53948ea814f99a13720d36aeae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRange: 2
+  interactionKey: 101
 --- !u!1 &9113836359072617805
 GameObject:
   m_ObjectHideFlags: 0
