@@ -121,6 +121,7 @@ public class GameManager : MonoBehaviour
         if (!gameEnded)
         {
             gameEnded = true;
+            movieProgress.movieIsPaused = true;
             endGameText.text = "Kicked out! Press " + restartKey.ToString() + " to Restart";
             endGameText.gameObject.SetActive(true);
         }
