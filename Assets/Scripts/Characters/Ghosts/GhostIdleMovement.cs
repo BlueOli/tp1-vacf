@@ -5,7 +5,7 @@ using UnityEngine;
 public class GhostIdleMovement : MonoBehaviour
 {
     public float amplitude = 0.075f; // The height of the up and down movement
-    public float frequency = 1f; // The speed of the movement
+    public float frequency = 2f; // The speed of the movement
 
     private Vector3 startPosition;
     private float randomOffset; // To make each ghost move differently
