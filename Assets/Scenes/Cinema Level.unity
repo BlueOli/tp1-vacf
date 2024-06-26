@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5fa6caf9b0a4449834f90c79bd99d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSO: {fileID: 11400000, guid: 30eb97ae790128b45b71e90ceaef3c08, type: 2}
   friendSpawner: {fileID: 1319579484}
   unknownPersonSpawner: {fileID: 123975865}
   playerPrefab: {fileID: 6485502819027516476, guid: c9797f5a08b27c145932b8bef2676ee3, type: 3}

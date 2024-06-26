@@ -41,6 +41,18 @@ public class UnknownPersonSpawner : MonoBehaviour
             }
     }
 
-
-
+    public void SpawnUnkownPersonByPos(int i, int j)
+    {
+        Debug.Log("Spawning in: " + i + ", " + j);
+        Seat currentSeat = room.seats[i, j];
+        if (!room.IsSeatOccupied(currentSeat))
+        {
+            Vector3 spawnPosition = currentSeat.transform.position;
+            Quaternion spawnRotation = currentSeat.transform.rotation;
+            GameObject tempUnknownPerson = Instantiate(unknownPersonPrefab, spawnPosition, spawnRotation);
+            tempUnknownPerson.transform.SetParent(currentSeat.gameObject.transform);
+            room.OccupySeat(currentSeat);
+            numUnknownPersonsSpawned++; // Increment the number of unknown persons spawned
+        }
+    }
 }

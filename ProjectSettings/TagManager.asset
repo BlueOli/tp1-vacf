@@ -8,6 +8,7 @@ TagManager:
   - Switch
   - Indicator
   - Unknown Person
+  - GridManager
   layers:
   - Default
   - TransparentFX

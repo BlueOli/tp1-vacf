@@ -14,7 +14,7 @@ public class FriendSpawner : MonoBehaviour
 
     private void Start()
     {
-        SpawnFriends();
+        //SpawnFriends();
     }
 
     public void SpawnFriends()
@@ -53,5 +53,16 @@ public class FriendSpawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SpawnFriendByPos(int x, int y)
+    {
+        Seat currentSeat = room.seats[x, y];
+        Vector3 spawnPosition = currentSeat.transform.position;
+        Quaternion spawnRotation = currentSeat.transform.rotation;
+        GameObject tempFriend = Instantiate(friendPrefab, spawnPosition, spawnRotation);
+        tempFriend.transform.SetParent(currentSeat.transform);
+        room.OccupySeat(currentSeat);
+        numFriendsSpawned++; // Increment the number of friends spawned
     }
 }

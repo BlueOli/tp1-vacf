@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cinema Level.unity
     guid: 4e4a0787d4df0b4439bc6c5c786fdf7f
+  - enabled: 1
+    path: Assets/Scenes/GridMiniGame.unity
+    guid: 854b2298aff5dc84482c6fd6fcaf8f53
   m_configObjects: {}

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public LoadGridLayout gridSO;
+
     public static GameManager Instance; // Singleton instance of GameManager
     public FriendSpawner friendSpawner; // Reference to the FriendSpawner script
     public UnknownPersonSpawner unknownPersonSpawner; // Reference to the UnknownPersonSpawner script
@@ -47,19 +49,44 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        friendSpawner.maxFriends = dificultyManagerSO.maxFriendNumber;
+        Debug.Log(gridSO.grid[0, 0]);
 
-        // Call the SpawnFriends method of the FriendSpawner script
-        if (friendSpawner != null)
+        if (gridSO.grid[0,0] != 0)
         {
-            friendSpawner.SpawnFriends();
-        }
+            dificultyManagerSO.maxFriendNumber = gridSO.maxFriends;
 
-        // Call the SpawnUnknownPersons method of the UnknownPersonSpawner script
-        if (unknownPersonSpawner != null)
-        {
-            unknownPersonSpawner.SpawnUnknownPersons();
+            for (int i = 0; i < gridSO.grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < gridSO.grid.GetLength(1); j++)
+                {
+                    switch (gridSO.grid[i, j])
+                    {
+                        case 1:
+                            friendSpawner.SpawnFriendByPos(gridSO.grid.GetLength(0) - 1 - i, j);
+                            break;
+                        case -1:
+                            unknownPersonSpawner.SpawnUnkownPersonByPos(gridSO.grid.GetLength(0) - 1 - i, j);
+                            break;
+                    }
+                }
+            }
         }
+        else
+        {
+            friendSpawner.maxFriends = dificultyManagerSO.maxFriendNumber;
+
+            // Call the SpawnFriends method of the FriendSpawner script
+            if (friendSpawner != null)
+            {
+                friendSpawner.SpawnFriends();
+            }
+
+            // Call the SpawnUnknownPersons method of the UnknownPersonSpawner script
+            if (unknownPersonSpawner != null)
+            {
+                unknownPersonSpawner.SpawnUnknownPersons();
+            }
+        }        
 
         SpawnPlayer();
 
