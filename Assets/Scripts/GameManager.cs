@@ -199,13 +199,35 @@ public class GameManager : MonoBehaviour
     private void RestartGame()
     {
         dificultyManagerSO.maxFriendNumber = 9;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        gridSO.maxFriends = dificultyManagerSO.maxFriendNumber;
+        if (gridSO.grid != null)
+        {
+            for (int i = 0; i < gridSO.grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < gridSO.grid.GetLength(1); j++)
+                {
+                    gridSO.grid[i, j] = 0;
+                }
+            }
+        }
+        SceneManager.LoadScene(2);
     }
 
     private void ContinueGame()
     {
         dificultyManagerSO.maxFriendNumber += 3;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        gridSO.maxFriends = dificultyManagerSO.maxFriendNumber;
+        if (gridSO.grid != null)
+        {
+            for (int i = 0; i < gridSO.grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < gridSO.grid.GetLength(1); j++)
+                {
+                    gridSO.grid[i, j] = 0;
+                }
+            }
+        }
+        SceneManager.LoadScene(2);
     }
 
     #region Random Events

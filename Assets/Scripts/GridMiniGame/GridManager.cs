@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
+    [SerializeField]
+    private Text maxFriendsText;
+
     [SerializeField]
     private LoadGridLayout gridSO;
 
@@ -22,9 +26,18 @@ public class GridManager : MonoBehaviour
 
     public void Start()
     {
-        gridSO.maxFriends = maxFriendSeatsTotal;
+        if (gridSO.maxFriends == 0 || gridSO.maxFriends < maxFriendSeatsTotal) 
+        {
+            gridSO.maxFriends = maxFriendSeatsTotal; 
+        }
+        else
+        {
+            maxFriendSeats = gridSO.maxFriends;
+        }
 
         CheckMaxFriendSeatsTotal();
+
+        maxFriendsText.text = "Friends without seats: " + maxFriendSeatsTotal;
     }
 
     public void CheckMaxFriendSeatsTotal()
@@ -81,6 +94,8 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
+
+        maxFriendsText.text = "Friends without seats: " + maxFriendSeatsTotal;
     }
 
     public void BuySeats()
