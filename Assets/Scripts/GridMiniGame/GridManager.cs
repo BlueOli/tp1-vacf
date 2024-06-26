@@ -125,7 +125,9 @@ public class GridManager : MonoBehaviour
         else
         {
             Debug.Log("The number is invalid");
-        }        
+        }
+
+        LoadGridSeats();
     }
 
     public bool CheckIfNumberIsValid(int number)
