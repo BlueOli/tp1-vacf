@@ -90,7 +90,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (cooldownUI != null)
             {
-                cooldownUI.fillAmount = 1 - (cooldownTimer / cooldownDuration * cooldownDurationMod); // Update fill amount based on cooldown progress
+                cooldownUI.fillAmount = 1 - (cooldownTimer / (cooldownDuration * cooldownDurationMod)); // Update fill amount based on cooldown progress
             }
         }
     }
