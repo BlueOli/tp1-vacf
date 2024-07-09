@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class PlayerInteraction : MonoBehaviour
 {
     public float interactionRange = 2f; // Range within which the player can interact with friends
-    public float cooldownDuration = 5f; // Duration of the cooldown period
+    public float cooldownDuration = 6f; // Duration of the cooldown period
     public float reduceLoudnessEffect = 2f;
+    public float interRangeMod = 1f;
+    public float cooldownDurationMod = 1f;
+    public int eventImmunities = 0;
 
     public KeyCode interactionKey = KeyCode.Q;
 
@@ -69,7 +72,7 @@ public class PlayerInteraction : MonoBehaviour
     private void InteractWithFriends()
     {
         // Get all friends within the interaction range of the player
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, interactionRange);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, interactionRange * interRangeMod);
         foreach (Collider col in hitColliders)
         {
             Friend friend = col.GetComponentInParent<Friend>();
@@ -87,7 +90,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (cooldownUI != null)
             {
-                cooldownUI.fillAmount = 1 - (cooldownTimer / cooldownDuration); // Update fill amount based on cooldown progress
+                cooldownUI.fillAmount = 1 - (cooldownTimer / cooldownDuration * cooldownDurationMod); // Update fill amount based on cooldown progress
             }
         }
     }

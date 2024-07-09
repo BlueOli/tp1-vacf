@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
@@ -20,6 +23,9 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private CardsManager cardsManager;
 
+    [SerializeField]
+    private TetrisPieceGenerator pieceGenerator;
+
     public int maxFriendSeatsTotal;
     public int maxFriendSeats = 6;
     public List<SeatSlot> seatSlotsList = new List<SeatSlot>();
@@ -32,12 +38,10 @@ public class GridManager : MonoBehaviour
         }
         else
         {
-            maxFriendSeats = gridSO.maxFriends;
+            maxFriendSeatsTotal = gridSO.maxFriends;
         }
 
         CheckMaxFriendSeatsTotal();
-
-        maxFriendsText.text = "Friends without seats: " + maxFriendSeatsTotal;
     }
 
     public void CheckMaxFriendSeatsTotal()
@@ -50,6 +54,8 @@ public class GridManager : MonoBehaviour
         {
             maxFriendSeats = 6;
         }
+
+        maxFriendsText.text = "Friends without seats: " + maxFriendSeatsTotal;
     }
 
     public void LoadGridSeats()
@@ -67,8 +73,7 @@ public class GridManager : MonoBehaviour
             i++;
             j = 0;
         }
-
-        ShowGridSeats();
+        //ShowGridSeats();
     }
 
     public void ShowGridSeats()
@@ -94,8 +99,6 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-
-        maxFriendsText.text = "Friends without seats: " + maxFriendSeatsTotal;
     }
 
     public void BuySeats()
@@ -191,9 +194,9 @@ public class GridManager : MonoBehaviour
                 bool foundFreeSeat = false;
                 while (!foundFreeSeat)
                 {
-                    int x = Random.Range(0, gridSO.grid.GetLength(0));
-                    int y = Random.Range(0, gridSO.grid.GetLength(1));
-                    Debug.Log(x + " " + y);
+                    int x = UnityEngine.Random.Range(0, gridSO.grid.GetLength(0));
+                    int y = UnityEngine.Random.Range(0, gridSO.grid.GetLength(1));
+                    //Debug.Log(x + " " + y);
                     if (gridSO.grid[x, y] == 0)
                     {
                         foundFreeSeat = true;
@@ -242,7 +245,7 @@ public class GridManager : MonoBehaviour
                             }
                             break;
                         case -1:
-                            Debug.Log("Occupied Seat");
+                            //Debug.Log("Occupied Seat");
                             break;
                     }
                 }
@@ -293,6 +296,85 @@ public class GridManager : MonoBehaviour
         seatSlotsList.Clear();
 
         LoadGridSeats();
+    }
+
+    public void BuySeatsByButton()
+    {
+        Vector2Int[] buyPositions = { };
+
+        int x = 0;
+        int y = 4;
+        foreach (Transform t in gridBox.transform)
+        {
+            foreach (Transform trans in t)
+            {
+                SeatSlot seat = trans.GetComponent<SeatSlot>();
+                if (seat.isOcuppied == 1 && !seat.isLocked)
+                {
+                    Array.Resize(ref buyPositions, buyPositions.Length + 1);
+                    buyPositions[buyPositions.Length - 1] = new Vector2Int(x, y);
+                }
+                x++;
+            }
+            y--;
+            x = 0;
+        }
+
+        CheckFriendTetris(buyPositions);
+
+        if (CheckIfNumberIsValid(GetInputNumber()))
+        {
+            int i = 0;
+            int j = 0;
+            foreach (Transform t in gridBox.transform)
+            {
+                foreach (Transform trans in t)
+                {
+                    SeatSlot seat = trans.GetComponent<SeatSlot>();
+                    if (seat.isOcuppied == 1 && !seat.isLocked)
+                    {
+                        seat.BuySeat();
+                        maxFriendSeatsTotal--;
+                        //Debug.Log("Max friends total: " + maxFriendSeatsTotal);
+                        CheckMaxFriendSeatsTotal();
+                    }
+                    j++;
+                }
+                i++;
+                j = 0;
+            }
+            seatSlotsList.Clear();
+        }
+        else
+        {
+            Debug.Log("The number is invalid");
+        }
+
+        LoadGridSeats();
+    }
+
+    public bool CheckFriendTetris(Vector2Int[] buyPositions)
+    {
+        bool foundTetris = false;
+
+        foreach (TetrisPieceGenerator.TetrisPiece piece in pieceGenerator.pieces)
+        {
+            TetrisPieceGenerator.TetrisPiece tempPiece = new()
+            {
+                blocks = buyPositions,
+                size = buyPositions.Length
+            };
+
+            if (piece.IsEqualShape(tempPiece))
+            {
+                Debug.Log("Shapes are equal");
+                foundTetris = true;
+                pieceGenerator.UseTetrisPiece(piece);
+                break;
+            }
+        }
+
+        return foundTetris;
     }
 
 }

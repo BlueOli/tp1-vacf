@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GridSO
   m_EditorClassIdentifier: 
   maxFriends: 8
+  tetrisCompleted: 0

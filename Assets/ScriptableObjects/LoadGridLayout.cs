@@ -10,4 +10,7 @@ public class LoadGridLayout : ScriptableObject
 
     [SerializeField]
     public int maxFriends = 0;
+
+    [SerializeField]
+    public int tetrisCompleted = 0;
 }

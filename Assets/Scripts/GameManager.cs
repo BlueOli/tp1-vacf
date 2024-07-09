@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public MovieProgress movieProgress;
     public Room gameRoom;
 
+    public GameObject ImmunityBox;
+
     public float kickOutThreshold = 0; // Threshold at which the group gets kicked out
 
     public Text endGameText; // Reference to the UI text for end game message
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     public float minTemperature = 10f;
     public float maxTemperature = 15f;
+
+    private GameObject player; 
 
     private void Awake()
     {
@@ -135,7 +139,29 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+        player = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+
+        CheckPlayerModifiers();        
+    }
+
+    public void CheckPlayerModifiers()
+    {
+        PlayerInteraction interaction = player.GetComponent<PlayerInteraction>();
+
+        if (gridSO.tetrisCompleted > 0)
+        {
+            interaction.cooldownDurationMod = 2f;
+
+            if (gridSO.tetrisCompleted > 1)
+            {
+                interaction.interRangeMod = 2f;
+
+                if (gridSO.tetrisCompleted > 2)
+                {
+                    interaction.eventImmunities = 1;
+                }
+            }
+        }
     }
 
     // Method to kick out the group
@@ -234,19 +260,56 @@ public class GameManager : MonoBehaviour
 
     public void TriggerPowerShutDown()
     {
-        powerManager.EventTrigger();
+        if(player.GetComponent<PlayerInteraction>().eventImmunities <= 0)
+        {
+            powerManager.EventTrigger();
+        }
+        else
+        {
+            player.GetComponent<PlayerInteraction>().eventImmunities--;
+            EventImmunityMessage();
+        }        
     }
 
     public void TriggerACShutDown()
     {
-        acManager.EventTrigger();
+        if (player.GetComponent<PlayerInteraction>().eventImmunities <= 0)
+        {
+            acManager.EventTrigger();
+        }
+        else
+        {
+            player.GetComponent<PlayerInteraction>().eventImmunities--;
+            EventImmunityMessage();
+        }
     }
 
     public void TriggerPopcornAndSoda()
     {
-        foodAndDrinksManager.EventTrigger();
+        if (player.GetComponent<PlayerInteraction>().eventImmunities <= 0)
+        {
+            foodAndDrinksManager.EventTrigger();
+        }
+        else
+        {
+            player.GetComponent<PlayerInteraction>().eventImmunities--;
+            EventImmunityMessage();
+        }
+    }
+
+    public void EventImmunityMessage()
+    {
+        StartCoroutine(ActivateForDuration());
+    }
+
+    private IEnumerator ActivateForDuration()
+    {
+        ImmunityBox.SetActive(true); // Activate the object
+        yield return new WaitForSeconds(5f); // Wait for the specified duration
+        ImmunityBox.SetActive(false); // Deactivate the object
     }
 
     #endregion
+
 }
 
