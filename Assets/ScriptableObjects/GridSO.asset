@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4049f5e68f6f6498311f9ffb1035b3, type: 3}
   m_Name: GridSO
   m_EditorClassIdentifier: 
-  maxFriends: 8
-  tetrisCompleted: 0
+  maxFriends: 15
+  tetrisCompleted: 3

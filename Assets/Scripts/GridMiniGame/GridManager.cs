@@ -322,33 +322,36 @@ public class GridManager : MonoBehaviour
 
         CheckFriendTetris(buyPositions);
 
-        if (CheckIfNumberIsValid(GetInputNumber()))
+        if (buyPositions.Length > 0)
         {
-            int i = 0;
-            int j = 0;
-            foreach (Transform t in gridBox.transform)
+            if (CheckIfNumberIsValid(GetInputNumber()))
             {
-                foreach (Transform trans in t)
+                int i = 0;
+                int j = 0;
+                foreach (Transform t in gridBox.transform)
                 {
-                    SeatSlot seat = trans.GetComponent<SeatSlot>();
-                    if (seat.isOcuppied == 1 && !seat.isLocked)
+                    foreach (Transform trans in t)
                     {
-                        seat.BuySeat();
-                        maxFriendSeatsTotal--;
-                        //Debug.Log("Max friends total: " + maxFriendSeatsTotal);
-                        CheckMaxFriendSeatsTotal();
+                        SeatSlot seat = trans.GetComponent<SeatSlot>();
+                        if (seat.isOcuppied == 1 && !seat.isLocked)
+                        {
+                            seat.BuySeat();
+                            maxFriendSeatsTotal--;
+                            //Debug.Log("Max friends total: " + maxFriendSeatsTotal);
+                            CheckMaxFriendSeatsTotal();
+                        }
+                        j++;
                     }
-                    j++;
+                    i++;
+                    j = 0;
                 }
-                i++;
-                j = 0;
+                seatSlotsList.Clear();
             }
-            seatSlotsList.Clear();
-        }
-        else
-        {
-            Debug.Log("The number is invalid");
-        }
+            else
+            {
+                Debug.Log("The number is invalid");
+            }
+        }        
 
         LoadGridSeats();
     }

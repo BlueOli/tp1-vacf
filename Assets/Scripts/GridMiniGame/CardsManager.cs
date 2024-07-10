@@ -48,6 +48,7 @@ public class CardsManager : MonoBehaviour
                 tempCard.SetAndDisplayColor(i);
                 tempCard.SetAndDisplayPosition(2 - j);
                 tempCard.SetAndDisplayNumber(tempArray[j]);
+                tempCard.numGroup = randomSecurityNums[i];
                 cardsNoNum.Remove(tempCard);
             }         
         }
@@ -55,7 +56,19 @@ public class CardsManager : MonoBehaviour
 
     public void RemoveNumber(int pos)
     {
+        foreach(CardGenerator card in cards)
+        {
+            if(card.numGroup == randomSecurityNums[pos])
+            {
+                HideCard(card);
+            }
+        }
         randomSecurityNums[pos] = -1;
+    }
+
+    public void HideCard(CardGenerator card)
+    {
+        card.SetAndDisplayColor(Color.grey);
     }
 
 }

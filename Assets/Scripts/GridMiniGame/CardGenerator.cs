@@ -11,6 +11,8 @@ public class CardGenerator : MonoBehaviour
     public bool isMiddle;
     public Color color;
 
+    public int numGroup;
+
     public Image backgtound;
     public Text numText;
     public GameObject left;
