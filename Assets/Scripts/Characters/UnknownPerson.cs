@@ -35,11 +35,11 @@ public class UnknownPerson : MonoBehaviour
         colorKeys[2].color = Color.red; // Red color for low patience
         colorKeys[2].time = 0.0f;
         GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];
-        alphaKeys[0].alpha = 0.4f;
+        alphaKeys[0].alpha = 1.0f;
         alphaKeys[0].time = 0.0f;
-        alphaKeys[1].alpha = 0.4f;
+        alphaKeys[1].alpha = 1.0f;
         alphaKeys[1].time = 0.5f;
-        alphaKeys[2].alpha = 0.4f;
+        alphaKeys[2].alpha = 1.0f;
         alphaKeys[2].time = 1.0f;
         patienceColorGradient.SetKeys(colorKeys, alphaKeys);
         rendererComponent = this.GetComponentInChildren<Renderer>();

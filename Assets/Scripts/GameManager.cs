@@ -36,7 +36,10 @@ public class GameManager : MonoBehaviour
     public float minTemperature = 10f;
     public float maxTemperature = 15f;
 
-    private GameObject player; 
+    private GameObject player;
+
+    public GameObject screenLight;
+    public GameObject theaterLights;
 
     private void Awake()
     {
@@ -190,6 +193,9 @@ public class GameManager : MonoBehaviour
             gameEnded = true;
             endGameText.text = "Good Job! Press " + continueKey.ToString() + " to Continue";
             endGameText.gameObject.SetActive(true);
+
+            screenLight.SetActive(false);
+            theaterLights.SetActive(true);
         }
     }
 

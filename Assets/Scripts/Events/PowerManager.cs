@@ -11,6 +11,9 @@ public class PowerManager : MonoBehaviour
     public Text eventText;
     public Switch switchy;
 
+    public GameObject emergencyLights;
+    public GameObject screenLight;
+
     public void Start()
     {
         if (switchy != null)
@@ -35,6 +38,8 @@ public class PowerManager : MonoBehaviour
             eventText.text = "The power went out!\nTurn the switch back on";
             eventText.gameObject.SetActive(true);
             switchy.SwitchOff();
+            emergencyLights.SetActive(true);
+            screenLight.SetActive(false);
         }        
     }
 
@@ -46,6 +51,8 @@ public class PowerManager : MonoBehaviour
             powerOut = false;
             eventText.text = "";
             eventText.gameObject.SetActive(false);
+            emergencyLights.SetActive(false);
+            screenLight.SetActive(true);
         }
     }
 }

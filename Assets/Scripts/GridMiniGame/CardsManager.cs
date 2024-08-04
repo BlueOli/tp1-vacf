@@ -45,8 +45,9 @@ public class CardsManager : MonoBehaviour
             {
                 int rand = Random.Range(0, cardsNoNum.Count);
                 CardGenerator tempCard = cardsNoNum[rand];
-                tempCard.SetAndDisplayColor(i);
-                tempCard.SetAndDisplayPosition(2 - j);
+                /*tempCard.SetAndDisplayColor(i);
+                tempCard.SetAndDisplayPosition(2 - j);*/
+                tempCard.SetAndDisplayColorAndPosition(i, 2 - j);
                 tempCard.SetAndDisplayNumber(tempArray[j]);
                 tempCard.numGroup = randomSecurityNums[i];
                 cardsNoNum.Remove(tempCard);
@@ -68,7 +69,8 @@ public class CardsManager : MonoBehaviour
 
     public void HideCard(CardGenerator card)
     {
-        card.SetAndDisplayColor(Color.grey);
+        card.gameObject.SetActive(false);
+        //card.SetAndDisplayColor(Color.grey);
     }
 
 }

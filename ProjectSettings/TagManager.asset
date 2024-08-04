@@ -9,6 +9,7 @@ TagManager:
   - Indicator
   - Unknown Person
   - GridManager
+  - CardSlot
   layers:
   - Default
   - TransparentFX

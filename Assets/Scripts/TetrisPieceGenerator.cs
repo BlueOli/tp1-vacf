@@ -241,7 +241,7 @@ public class TetrisPieceGenerator : MonoBehaviour
             foreach (Vector2Int v2Int in tempBlock)
             {
                 GameObject block = Instantiate(blockPrefab, tetrisParents[index]);
-                block.transform.localPosition = new Vector3(v2Int.x * 30, v2Int.y * 30, 0);
+                block.transform.localPosition = new Vector3(v2Int.x * 60, v2Int.y * 60, 0);
                 tetris.index = index;
             }
             index++;

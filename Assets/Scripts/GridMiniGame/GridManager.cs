@@ -26,6 +26,9 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private TetrisPieceGenerator pieceGenerator;
 
+    [SerializeField]
+    private CardInputManager cardInputManager;
+
     public int maxFriendSeatsTotal;
     public int maxFriendSeats = 6;
     public List<SeatSlot> seatSlotsList = new List<SeatSlot>();
@@ -324,8 +327,7 @@ public class GridManager : MonoBehaviour
 
         if (buyPositions.Length > 0)
         {
-            if (CheckIfNumberIsValid(GetInputNumber()))
-            {
+            
                 int i = 0;
                 int j = 0;
                 foreach (Transform t in gridBox.transform)
@@ -346,11 +348,8 @@ public class GridManager : MonoBehaviour
                     j = 0;
                 }
                 seatSlotsList.Clear();
-            }
-            else
-            {
-                Debug.Log("The number is invalid");
-            }
+
+            cardInputManager.ClearInput();
         }        
 
         LoadGridSeats();

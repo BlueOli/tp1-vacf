@@ -13,15 +13,17 @@ public class CardGenerator : MonoBehaviour
 
     public int numGroup;
 
-    public Image backgtound;
+    public Image background;
     public Text numText;
     public GameObject left;
     public GameObject right;
     public GameObject middle;
 
+    public List<Sprite> sprites = new List<Sprite>();
+
     public void Awake()
     {
-        backgtound = transform.GetChild(0).GetComponent<Image>();
+        background = transform.GetChild(0).GetComponent<Image>();
         left = transform.GetChild(1).gameObject;
         middle = transform.GetChild(2).gameObject;
         right = transform.GetChild(3).gameObject;
@@ -51,7 +53,7 @@ public class CardGenerator : MonoBehaviour
 
     public void DisplayColor()
     {
-        backgtound.color = color;
+        background.color = color;
     }
 
     public void SetAndDisplayColor(Color col)
@@ -129,5 +131,28 @@ public class CardGenerator : MonoBehaviour
     {
         SetPosition(pos);
         DisplayPosition();
+    }
+
+    public void SetAndDisplayColorAndPosition(int col, int pos)
+    {
+        Color c = Color.white;
+
+        switch (col)
+        {
+            case 0:
+                c = Color.cyan;
+                break;
+            case 1:
+                c = Color.magenta;
+                break;
+            case 2:
+                c = Color.yellow;
+                break;
+        }
+
+        SetColor(c);
+        SetPosition(pos);
+
+        background.sprite = sprites[col*3 + (2 - pos)];
     }
 }
